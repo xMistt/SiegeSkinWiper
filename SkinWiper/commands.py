@@ -2,6 +2,7 @@ import discord
 
 from discord.ext import commands
 from .ubisoft import UbisoftInstance
+from .errors import InvalidCredentails
 
 class DiscordCommands(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
@@ -25,7 +26,16 @@ class DiscordCommands(commands.Cog):
             password=password
         )
 
-        await ubi.login()
+        try:
+            await ubi.login()
+        except InvalidCredentails:
+            embed = discord.Embed(
+                title="Invalid details.",
+                description=f"Account credentials are wrong, try resetting your password.",
+                color=0xFF0000
+            )
+
+            return await ctx.send(embed=embed)
 
         embed = discord.Embed(
             title="Logged in.",
