@@ -45,11 +45,11 @@ class DiscordCommands(commands.Cog):
 
         message = await ctx.send(embed=embed)
 
-        await ubi.wipe_skins()
+        skins = await ubi.wipe_skins()
 
         embed = discord.Embed(
             title="Skins wiped.",
-            description=f"Successfully removed all skins.",
+            description=f"Successfully removed {len(skins['items'])} skins on {ubi.username}.",
             color=0xc10df2
         )
 
